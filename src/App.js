@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import './Firebase/config';
 import AdminRoute from './Router/AdminRoute';
 import Login from './Components/Login';
 import Plans from './Components/Plans';
