@@ -14,7 +14,8 @@ function App() {
     <UserProvider>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Login />} errorElement={<Login />} />
+          <Route exact path="/" element={<Signup />} />
+          <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/admin" element={<AdminRoute />}>
             <Route exact path="/admin" element={<Admin />} />
