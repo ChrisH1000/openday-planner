@@ -6,7 +6,7 @@ const LoggedInRoute = () => {
   const auth = getAuth();
   console.log(auth);
 
-  const loggedIn = true; //auth.currentUser; // determine if authorized, from context or however you're doing it
+  const loggedIn = auth.currentUser; // determine if authorized, from context or however you're doing it
   console.log(loggedIn);
 
   // If authorized, return an outlet that will render child elements

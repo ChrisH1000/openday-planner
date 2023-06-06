@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { signup } from '../Firebase/auth';
 
-function Signup() {
+function Signup(props) {
   const { register, handleSubmit, reset } = useForm();
+  const [isLoading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log(isLoading);
+    let newUser;
+    setLoading(true);
     try {
-      await signup(data);
+      newUser = await signup(data);
       reset();
+
+      if (newUser) {
+        props.history.push('/plans');
+      } else {
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
     }

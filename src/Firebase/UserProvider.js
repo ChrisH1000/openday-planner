@@ -43,9 +43,9 @@ export const UserProvider = (props) => {
   );
 };
 
-UserProvider.propTypes = {
+/* UserProvider.propTypes = {
   children: PropTypes.UserContext
-};
+}; */
 
 export const useSession = () => {
   const session = useContext(UserContext);
