@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 import { signup } from '../Firebase/auth';
 
-function Signup(props) {
+function Signup() {
   const { register, handleSubmit, reset } = useForm();
   const [isLoading, setLoading] = useState(false);
 
@@ -15,7 +16,7 @@ function Signup(props) {
       reset();
 
       if (newUser) {
-        props.history.push('/plans');
+        <Navigate to="/plans" />;
       } else {
         setLoading(false);
       }

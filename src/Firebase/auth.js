@@ -1,4 +1,10 @@
-import { getAuth, createUserWithEmailAndPassword, updateProfile, signOut } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signOut,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
 // import { app } from './config';
 
 export const signup = async ({ firstName, lastName, email, password }) => {
@@ -34,4 +40,19 @@ export const logout = () => {
     .catch((error) => {
       console.error(error);
     });
+};
+
+export const login = async ({ email, password }) => {
+  const auth = getAuth();
+  let user;
+  await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      user = userCredential.user;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  return user;
 };
