@@ -1,13 +1,12 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
+import { useSession } from '../Firebase/UserProvider';
 
 const LoggedInRoute = (props) => {
-  const auth = getAuth();
-  console.log(props);
+  const { user, isAdmin } = useSession();
 
-  const loggedIn = auth.currentUser; // determine if authorized, from context or however you're doing it
-  console.log(loggedIn);
+  const loggedIn = user; // determine if authorized, from context or however you're doing it
+  console.log(isAdmin);
 
   // If authorized, return an outlet that will render child elements
   // If not, return element that will navigate to login page

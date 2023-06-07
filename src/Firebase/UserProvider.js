@@ -11,16 +11,6 @@ export const UserProvider = (props) => {
   });
 
   useEffect(() => {
-    /* const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-      let isAdmin = false;
-
-      if (user) {
-        const token = await user.getIdTokenResult();
-        isAdmin = token.claims.admin;
-      }
-
-      setSession({ loading: false, user, isAdmin });
-    }); */
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       let isAdmin = false;
