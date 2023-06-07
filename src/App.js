@@ -14,14 +14,20 @@ function App() {
     <UserProvider>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Signup />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/" element={<LoggedInRoute props="empty" />}>
+            <Route exact path="/" element={<Signup />} />
+          </Route>
+          <Route exact path="/login" element={<LoggedInRoute props="login" />}>
+            <Route exact path="/login" element={<Login />} />
+          </Route>
+          <Route exact path="/signup" element={<LoggedInRoute props="signup" />}>
+            <Route exact path="/signup" element={<Signup />} />
+          </Route>
+          <Route exact path="/plans" element={<LoggedInRoute props="plans" />}>
+            <Route exact path="/plans" element={<Plans />} />
+          </Route>
           <Route exact path="/admin" element={<AdminRoute />}>
             <Route exact path="/admin" element={<Admin />} />
-          </Route>
-          <Route exact path="/plans" element={<LoggedInRoute />}>
-            <Route exact path="/plans" element={<Plans />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
