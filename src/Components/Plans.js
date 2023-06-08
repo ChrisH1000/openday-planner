@@ -4,7 +4,9 @@ import { useSession } from '../Firebase/UserProvider';
 import { logout } from '../Firebase/auth';
 
 function Plans() {
-  const { user } = useSession();
+  const { user, isAdmin } = useSession();
+
+  console.log(user.displayName);
 
   if (!user) {
     return null;
@@ -24,7 +26,7 @@ function Plans() {
       </button>
 
       <div>
-        <p>Name: {user.displayName}</p>
+        <p>Name: {user.displayName !== null ? user.displayName : isAdmin ? 'Admin' : 'Watcher'}</p>
         <p>Email: {user.email}</p>
         <p>UID: {user.uid}</p>
       </div>
