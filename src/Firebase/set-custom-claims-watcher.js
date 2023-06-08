@@ -11,12 +11,14 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-admin.auth().setCustomUserClaims(uid, { watcher: true })
+admin
+  .auth()
+  .setCustomUserClaims(uid, { watcher: true })
   .then(() => {
     console.log('custom claims set for user', uid);
-    process.exit()
+    process.exit();
   })
-  .catch(error => {
+  .catch((error) => {
     console.log(error);
     process.exit(1);
-  })
+  });
