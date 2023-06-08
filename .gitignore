@@ -22,3 +22,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# JWT token
+openday-planner-firebase-adminsdk-8200l-0898bcab76.json

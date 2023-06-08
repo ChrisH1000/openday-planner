@@ -7,20 +7,23 @@ export const UserProvider = (props) => {
   const [session, setSession] = useState({
     user: null,
     loading: true,
-    isAdmin: false
+    isAdmin: false,
+    isWatcher: false
   });
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       let isAdmin = false;
+      let isWatcher = false;
 
       if (user) {
         const token = await user.getIdTokenResult();
         isAdmin = token.claims.admin;
+        isWatcher = token.claims.watcher;
       }
 
-      setSession({ loading: false, user, isAdmin });
+      setSession({ loading: false, user, isAdmin, isWatcher });
     });
 
     return () => unsubscribe();
