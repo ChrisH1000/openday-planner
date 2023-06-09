@@ -11,7 +11,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
-console.log(app.options);
+// console.log(app.options);
 
 /* import firebase from 'firebase/app';
 // import 'firebase/firestore';
