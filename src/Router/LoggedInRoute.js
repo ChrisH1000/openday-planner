@@ -5,19 +5,30 @@ import { useSession } from '../Firebase/UserProvider';
 const LoggedInRoute = (props) => {
   const { user, isAdmin, isWatcher } = useSession();
 
-  const loggedIn = user; // determine if authorized, from context or however you're doing it
-
+  console.log(user);
   console.log('Admin user: ' + isAdmin);
   console.log('Watcher user: ' + isWatcher);
 
-  // If authorized, return an outlet that will render child elements
-  // If not, return element that will navigate to login page
-  if (Object.values(props).includes('plans')) {
-    console.log('plans path');
-    return loggedIn ? <Outlet /> : <Navigate to="/" />;
+  if (!user) {
+    if (Object.values(props).includes('login') || Object.values(props).includes('signup')) {
+      return <Outlet />;
+    } else {
+      return <Navigate to="/login" />;
+    }
+  }
+
+  if (isAdmin || isWatcher) {
+    if (Object.values(props).includes('login') || Object.values(props).includes('signup')) {
+      return <Navigate to="/admin" />;
+    } else {
+      return <Outlet />;
+    }
   } else {
-    console.log('other path');
-    return loggedIn ? <Navigate to="/plans" /> : <Outlet />;
+    if (Object.values(props).includes('login') || Object.values(props).includes('signup')) {
+      return <Navigate to="/plans" />;
+    } else {
+      return <Outlet />;
+    }
   }
 };
 

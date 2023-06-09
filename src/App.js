@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './Firebase/config';
-import AdminRoute from './Router/AdminRoute';
+// import AdminRoute from './Router/AdminRoute';
 import LoggedInRoute from './Router/LoggedInRoute';
 import Login from './Components/Login';
 import Plans from './Components/Plans';
@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/plans" element={<LoggedInRoute props="plans" />}>
             <Route exact path="/plans" element={<Plans />} />
           </Route>
-          <Route exact path="/admin" element={<AdminRoute />}>
+          <Route exact path="/admin" element={<LoggedInRoute props="admin" />}>
             <Route exact path="/admin" element={<Admin />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
