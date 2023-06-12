@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
-import { login } from '../Firebase/auth';
+import { login, loginGoogle } from '../Firebase/auth';
 
 function Login() {
   const { register, handleSubmit, reset } = useForm();
@@ -14,6 +14,24 @@ function Login() {
     try {
       user = await login(data);
       reset();
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (user) {
+      <Navigate to="/plans" />;
+    } else {
+      setLoading(false);
+    }
+  };
+
+  const openPopup = async () => {
+    let user;
+    setLoading(true);
+    try {
+      user = await loginGoogle();
+      console.log('hello');
+      // reset();
     } catch (error) {
       console.log(error);
     }
@@ -48,6 +66,9 @@ function Login() {
               </button>
             </div>
           </form>
+          <button className="ui primary button login" onClick={openPopup}>
+            Login with Google
+          </button>
         </div>
       </div>
     </div>

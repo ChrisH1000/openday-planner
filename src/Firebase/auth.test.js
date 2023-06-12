@@ -1,15 +1,11 @@
-import {
-  signup,
-  logout,
-  login,
-} from './auth';
+import { signup, logout, login } from './auth';
 
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
   signOut,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 
 jest.mock('firebase/auth', () => ({
@@ -17,7 +13,7 @@ jest.mock('firebase/auth', () => ({
   createUserWithEmailAndPassword: jest.fn(),
   updateProfile: jest.fn(),
   signOut: jest.fn(),
-  signInWithEmailAndPassword: jest.fn(),
+  signInWithEmailAndPassword: jest.fn()
 }));
 
 describe('signup', () => {
@@ -37,7 +33,7 @@ describe('signup', () => {
     expect(getAuth).toHaveBeenCalled();
     expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(auth, email, password);
     expect(updateProfile).toHaveBeenCalledWith(auth.currentUser, {
-      displayName: `${firstName} ${lastName}`,
+      displayName: `${firstName} ${lastName}`
     });
   });
 
