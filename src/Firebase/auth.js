@@ -9,12 +9,10 @@ import {
 export const signup = async ({ firstName, lastName, email, password }) => {
   const auth = getAuth();
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser, {
       displayName: `${firstName} ${lastName}`
     });
-    console.log(user);
   } catch (error) {
     console.error(error);
   }
