@@ -5,7 +5,7 @@ import { UserProvider, UserContext } from './UserProvider'; // replace with your
 
 jest.mock('firebase/auth', () => ({
   getAuth: jest.fn(),
-  onAuthStateChanged: jest.fn(),
+  onAuthStateChanged: jest.fn()
 }));
 
 describe('UserProvider', () => {
@@ -18,9 +18,9 @@ describe('UserProvider', () => {
       getIdTokenResult: jest.fn().mockResolvedValue({
         claims: {
           admin: true,
-          watcher: false,
-        },
-      }),
+          watcher: false
+        }
+      })
     };
     getAuth.mockReturnValue('authInstance');
     onAuthStateChanged.mockImplementation((auth, callback) => {
@@ -38,7 +38,7 @@ describe('UserProvider', () => {
       render(
         <UserProvider>
           <TestComponent />
-        </UserProvider>,
+        </UserProvider>
       );
     });
 
@@ -46,7 +46,7 @@ describe('UserProvider', () => {
       user: mockUser,
       loading: false,
       isAdmin: true,
-      isWatcher: false,
+      isWatcher: false
     });
   });
 
@@ -54,7 +54,11 @@ describe('UserProvider', () => {
     const unsubscribe = jest.fn();
     onAuthStateChanged.mockReturnValue(unsubscribe);
 
-    const { unmount } = render(<UserProvider><div /></UserProvider>);
+    const { unmount } = render(
+      <UserProvider>
+        <div />
+      </UserProvider>
+    );
 
     unmount();
     expect(unsubscribe).toHaveBeenCalled();
