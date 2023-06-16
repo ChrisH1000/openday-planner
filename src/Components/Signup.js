@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { signup } from '../Firebase/auth';
+import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 
 function Signup() {
   const { register, handleSubmit, reset } = useForm();
@@ -29,38 +30,54 @@ function Signup() {
     <div className="login-container">
       <div className="ui card login-card">
         <div className="content">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="two fields">
-              <div className="field">
-                <label>
-                  First Name
-                  <input {...register('firstName')} />
-                </label>
+          <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="fname" value="First Name" />
               </div>
-              <div className="field">
-                <label>
-                  Last Name
-                  <input {...register('lastName')} />
-                </label>
+              <TextInput
+                id="fname"
+                placeholder="Joe"
+                required
+                type="text"
+                {...register('firstName')}
+              />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="lname" value="Last Name" />
               </div>
+              <TextInput
+                id="lname"
+                placeholder="Bloggs"
+                required
+                type="text"
+                {...register('lastName')}
+              />
             </div>
-            <div className="field">
-              <label>
-                Email
-                <input {...register('email')} />
-              </label>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="email1" value="Your email" />
+              </div>
+              <TextInput
+                id="email1"
+                placeholder="name@flowbite.com"
+                required
+                type="email"
+                {...register('email')}
+              />
             </div>
-            <div className="field">
-              <label>
-                Password
-                <input {...register('password')} />
-              </label>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="password1" value="Your password" />
+              </div>
+              <TextInput id="password1" required type="password" {...register('password')} />
             </div>
-            <div className="field actions">
-              <button className="ui primary button login" type="submit">
-                Signup
-              </button>
+            <div className="flex items-center gap-2">
+              <Checkbox id="remember" />
+              <Label htmlFor="remember">Remember me</Label>
             </div>
+            <Button type="submit">Signup</Button>
           </form>
         </div>
       </div>
