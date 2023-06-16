@@ -1,7 +1,6 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 import { useSession } from '../Firebase/UserProvider';
-import { logout } from '../Firebase/auth';
+import Header from './Header';
 
 function Plans() {
   const { user, isAdmin } = useSession();
@@ -12,18 +11,10 @@ function Plans() {
     return null;
   }
 
-  const logoutUser = async () => {
-    await logout();
-    <Navigate to="/plans" />;
-  };
-
   return (
     <>
+      <Header />
       <h1>Plans page</h1>
-
-      <button className="ui secondary button logout" onClick={logoutUser}>
-        LOGOUT
-      </button>
 
       <div>
         <p>Name: {user.displayName !== null ? user.displayName : isAdmin ? 'Admin' : 'Watcher'}</p>

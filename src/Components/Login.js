@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { login, loginGoogle } from '../Firebase/auth';
-import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
+import { Button, Label, TextInput } from 'flowbite-react';
 
 function Login() {
   const { register, handleSubmit, reset } = useForm();
@@ -66,10 +66,6 @@ function Login() {
                 <Label htmlFor="password1" value="Your password" />
               </div>
               <TextInput id="password1" required type="password" {...register('password')} />
-            </div>
-            <div className="flex items-center gap-2">
-              <Checkbox id="remember" />
-              <Label htmlFor="remember">Remember me</Label>
             </div>
             <Button type="submit">Submit</Button>
             <Button onClick={openPopup}>Login with Google</Button>
