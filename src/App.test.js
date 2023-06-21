@@ -1,32 +1,42 @@
-import { render, act } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route } from 'react-router-dom';
 import App from './App';
 
+jest.mock('./Router/LoggedInRoute', () => () => <div>LoggedInRoute</div>);
+jest.mock('./Components/Login', () => () => <div>Login</div>);
+jest.mock('./Components/Plans', () => () => <div>Plans</div>);
+jest.mock('./Components/Admin', () => () => <div>Admin</div>);
+jest.mock('./Components/Signup', () => () => <div>Signup</div>);
+jest.mock('./Firebase/UserProvider', () => ({ children }) => <div>{children}</div>);
+jest.mock('flowbite-react', () => ({ children }) => <div>{children}</div>);
+
 describe('App', () => {
-  test('renders without errors', () => {
-    act(() => {
-      render(
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      );
-    });
-    // No error means the component rendered successfully
+  it('should render Signup at path /', () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Signup')).toBeInTheDocument();
   });
 
-  test('renders the correct routes', () => {
-    act(() => {
-      const { getByText } = render(
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      );
+  it('should render Login at path /login', () => {
+    render(
+      <MemoryRouter initialEntries={['/login']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Login')).toBeInTheDocument();
+  });
 
-      // Check if the routes are rendered correctly
-      /* expect(getByText('Signup')).toBeInTheDocument();
-      expect(getByText('Login')).toBeInTheDocument();
-      expect(getByText('Plans')).toBeInTheDocument();
-      expect(getByText('Admin')).toBeInTheDocument(); */
-    });
+  // Similarly write tests for other routes
+
+  it('should redirect to / for unmatched routes', () => {
+    render(
+      <MemoryRouter initialEntries={['/non-existing-route']}>
+        <Route path="*" element={<App />} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Signup')).toBeInTheDocument();
   });
 });
