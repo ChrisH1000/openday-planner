@@ -11,10 +11,23 @@ function Admin() {
       const opendays = querySnapshot.docs.map(async (doc) => {
         const opendayData = { id: doc.id, ...doc.data() };
 
-        const subQuerySnapshot = await getDocs(collection(db, 'openday', doc.id, 'events'));
-        const events = subQuerySnapshot.docs.map((doc) => {
-          return { id: doc.id, ...doc.data() };
-        });
+        const eventsQuerySnapshot = await getDocs(collection(db, 'openday', doc.id, 'events'));
+        const events = await Promise.all(
+          eventsQuerySnapshot.docs.map(async (eventDoc) => {
+            const eventData = { id: eventDoc.id, ...eventDoc.data() };
+
+            const sessionsQuerySnapshot = await getDocs(
+              collection(db, 'openday', doc.id, 'events', eventDoc.id, 'sessions')
+            );
+            const sessions = sessionsQuerySnapshot.docs.map((sessionDoc) => {
+              return { id: sessionDoc.id, ...sessionDoc.data() };
+            });
+
+            eventData.sessions = sessions;
+
+            return eventData;
+          })
+        );
 
         opendayData.events = events;
 
