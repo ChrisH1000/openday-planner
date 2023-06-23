@@ -5,39 +5,26 @@ import Header from './Header';
 
 function Admin() {
   useEffect(() => {
-    let opendays = [];
     async function fetchData() {
       const querySnapshot = await getDocs(collection(db, 'openday'));
-      console.log(querySnapshot);
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //console.log(doc.id, ' => ', doc.data());
-        opendays.push({ id: doc.id, ...doc.data() });
 
-        /* const querySnapshot2 = await getDocs(collection(db, 'openday', doc.id, 'events'));
-        querySnapshot2.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-        }); */
-      });
-    }
+      const opendays = querySnapshot.docs.map(async (doc) => {
+        const opendayData = { id: doc.id, ...doc.data() };
 
-    async function fetchData2(id) {
-      let events = [];
-      const querySnapshot2 = await getDocs(collection(db, 'openday', id, 'events'));
-      querySnapshot2.forEach((doc) => {
-        events.push({ id: doc.id, ...doc.data() });
-      });
-
-      return events;
-    }
-    fetchData().then(() => {
-      console.log(opendays);
-      opendays.forEach((openday) => {
-        fetchData2(openday.id).then((events) => {
-          openday.events = events;
+        const subQuerySnapshot = await getDocs(collection(db, 'openday', doc.id, 'events'));
+        const events = subQuerySnapshot.docs.map((doc) => {
+          return { id: doc.id, ...doc.data() };
         });
+
+        opendayData.events = events;
+
+        return opendayData;
       });
+
+      return Promise.all(opendays);
+    }
+
+    fetchData().then((opendays) => {
       console.log(opendays);
     });
   }, []);
