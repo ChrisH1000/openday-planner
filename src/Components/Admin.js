@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from '../Firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 
 function Admin() {
+  const [opendays, setOpendays] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const querySnapshot = await getDocs(collection(db, 'openday'));
@@ -36,7 +38,9 @@ function Admin() {
       return Promise.all(opendays);
     }
 
-    fetchData().then((opendays) => {
+    fetchData().then((opendayData) => {
+      // console.log(opendayData);
+      setOpendays(opendayData);
       console.log(opendays);
     });
   }, []);
