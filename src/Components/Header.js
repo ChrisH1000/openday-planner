@@ -7,10 +7,8 @@ import { Button, DarkThemeToggle } from 'flowbite-react';
 function Header() {
   const { user } = useSession();
 
-  console.log(user.displayName);
-
-  if (!user) {
-    return null;
+  if (user) {
+    console.log(user.displayName);
   }
 
   const logoutUser = async () => {
@@ -19,11 +17,14 @@ function Header() {
   };
 
   return (
-    <>
-      <DarkThemeToggle />
+    <header className="bg-white shadow">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Openday Planner</h1>
+        <DarkThemeToggle />
 
-      <Button onClick={logoutUser}>Logout</Button>
-    </>
+        {user ? <Button onClick={logoutUser}>Logout</Button> : ''}
+      </div>
+    </header>
   );
 }
 

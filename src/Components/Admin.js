@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { db } from '../Firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
-import Header from './Header';
 
 function Admin() {
   useEffect(() => {
@@ -44,7 +43,6 @@ function Admin() {
 
   return (
     <>
-      <Header />
       <h1>Admin page</h1>
     </>
   );

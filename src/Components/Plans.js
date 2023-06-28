@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSession } from '../Firebase/UserProvider';
-import Header from './Header';
 
 function Plans() {
   const { user, isAdmin } = useSession();
@@ -13,7 +12,6 @@ function Plans() {
 
   return (
     <>
-      <Header />
       <h1>Plans page</h1>
 
       <div>
