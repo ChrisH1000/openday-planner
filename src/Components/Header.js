@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSession } from '../Firebase/UserProvider';
 import { logout } from '../Firebase/auth';
-import { Button, DarkThemeToggle } from 'flowbite-react';
 
 function Header() {
   const { user } = useSession();
@@ -22,11 +21,14 @@ function Header() {
         <div className="flex-initial w-1/2">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Openday Planner</h1>
         </div>
-        <div className="flex-initial w-64">
-          <DarkThemeToggle />
-        </div>
 
-        {user ? <Button onClick={logoutUser}>Logout</Button> : ''}
+        {user ? (
+          <button type="button" className="btn bg-red-400" onClick={logoutUser}>
+            Logout
+          </button>
+        ) : (
+          ''
+        )}
       </div>
     </header>
   );

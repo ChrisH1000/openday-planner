@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { signup } from '../Firebase/auth';
-import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 
 function Signup() {
   const { register, handleSubmit, reset } = useForm();
@@ -33,51 +32,87 @@ function Signup() {
           <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="fname" value="First Name" />
+                <label htmlFor="fname" className="inputLabel">
+                  First Name
+                </label>
               </div>
-              <TextInput
-                id="fname"
-                placeholder="Joe"
-                required
-                type="text"
-                {...register('firstName')}
-              />
+              <div className="inputWrapper">
+                <input
+                  type="text"
+                  name="fname"
+                  id="fname"
+                  required
+                  className="textInput"
+                  {...register('firstName')}
+                />
+              </div>
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="lname" value="Last Name" />
+                <label htmlFor="lname" className="inputLabel">
+                  Last Name
+                </label>
               </div>
-              <TextInput
-                id="lname"
-                placeholder="Bloggs"
-                required
-                type="text"
-                {...register('lastName')}
-              />
+              <div className="inputWrapper">
+                <input
+                  type="text"
+                  name="lname"
+                  id="lname"
+                  required
+                  className="textInput"
+                  {...register('lastName')}
+                />
+              </div>
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email1" value="Your email" />
+                <label htmlFor="email1" className="inputLabel">
+                  Your email
+                </label>
               </div>
-              <TextInput
-                id="email1"
-                placeholder="name@flowbite.com"
-                required
-                type="email"
-                {...register('email')}
-              />
+              <div className="inputWrapper">
+                <input
+                  type="email"
+                  name="email1"
+                  id="email1"
+                  required
+                  className="textInput"
+                  placeholder="john@doe.com"
+                  {...register('email')}
+                />
+              </div>
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password1" value="Your password" />
+                <label htmlFor="password1" className="inputLabel">
+                  Your password
+                </label>
               </div>
-              <TextInput id="password1" required type="password" {...register('password')} />
+              <div className="inputWrapper">
+                <input
+                  type="password"
+                  name="password1"
+                  id="password1"
+                  required
+                  className="textInput"
+                  {...register('password')}
+                />
+              </div>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="remember" />
-              <Label htmlFor="remember">Remember me</Label>
+              <input
+                id="remember"
+                name="remember"
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+              />
+              <label htmlFor="remember" className="inputLabel">
+                Remember me
+              </label>
             </div>
-            <Button type="submit">Signup</Button>
+            <button type="submit" className="btn bg-indigo-600">
+              Signup
+            </button>
           </form>
         </div>
       </div>

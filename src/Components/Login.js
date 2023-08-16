@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import { login, loginGoogle } from '../Firebase/auth';
-import { Button, Label, TextInput } from 'flowbite-react';
 
 function Login() {
   const { register, handleSubmit, reset } = useForm();
@@ -51,24 +50,47 @@ function Login() {
           <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email1" value="Your email" />
+                <label htmlFor="email1" className="inputLabel">
+                  Your email
+                </label>
               </div>
-              <TextInput
-                id="email1"
-                placeholder="name@flowbite.com"
-                required
-                type="email"
-                {...register('email')}
-              />
+              <div className="inputWrapper">
+                <input
+                  type="email"
+                  name="email1"
+                  id="email1"
+                  required
+                  className="textInput"
+                  placeholder="john@doe.com"
+                  {...register('email')}
+                />
+              </div>
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password1" value="Your password" />
+                <label htmlFor="password1" className="inputLabel">
+                  Your password
+                </label>
               </div>
-              <TextInput id="password1" required type="password" {...register('password')} />
+              <div className="inputWrapper">
+                <input
+                  type="password"
+                  name="password1"
+                  id="password1"
+                  required
+                  className="textInput"
+                  {...register('password')}
+                />
+              </div>
             </div>
-            <Button type="submit">Submit</Button>
-            <Button onClick={openPopup}>Login with Google</Button>
+            <div className="mt-6 flex items-center justify-end gap-x-6">
+              <button type="button" className="btn bg-green-300" onClick={openPopup}>
+                Login with Google
+              </button>
+              <button type="submit" className="btn bg-indigo-600">
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>
