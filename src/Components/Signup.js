@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { signup } from '../Firebase/auth';
 
 function Signup() {
@@ -110,9 +110,14 @@ function Signup() {
                 Remember me
               </label>
             </div>
-            <button type="submit" className="btn bg-indigo-600">
-              Signup
-            </button>
+            <div className="mt-6 flex items-center justify-end gap-x-6">
+              <Link to="/login" className="btn bg-gray-600">
+                Login
+              </Link>
+              <button type="submit" className="btn bg-indigo-600">
+                Signup
+              </button>
+            </div>
           </form>
         </div>
       </div>
