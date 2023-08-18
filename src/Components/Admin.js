@@ -9,7 +9,7 @@ function Admin() {
     async function fetchData() {
       const querySnapshot = await getDocs(collection(db, 'openday'));
 
-      const opendays = querySnapshot.docs.map(async (doc) => {
+      const odays = querySnapshot.docs.map(async (doc) => {
         const opendayData = { id: doc.id, ...doc.data() };
 
         const eventsQuerySnapshot = await getDocs(collection(db, 'openday', doc.id, 'events'));
@@ -35,19 +35,22 @@ function Admin() {
         return opendayData;
       });
 
-      return Promise.all(opendays);
+      return Promise.all(odays);
     }
 
     fetchData().then((opendayData) => {
-      // console.log(opendayData);
       setOpendays(opendayData);
-      console.log(opendays);
     });
   }, []);
 
   return (
     <>
       <h1>Admin page</h1>
+
+      {console.log(opendays)}
+      {opendays.map((openday) => {
+        return <p key={openday.id}>{openday.title}</p>;
+      })}
     </>
   );
 }
