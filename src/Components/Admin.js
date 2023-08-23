@@ -45,12 +45,51 @@ function Admin() {
 
   return (
     <>
-      <h1>Admin page</h1>
+      <h1 className="text-2xl mb-8">Admin page</h1>
 
-      {console.log(opendays)}
-      {opendays.map((openday) => {
-        return <p key={openday.id}>{openday.title}</p>;
-      })}
+      <div className="relative overflow-x-auto">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Start date
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Location
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {console.log(opendays)}
+            {opendays.map((openday) => {
+              const dateFormat = new Date(openday.starttime.seconds * 1000);
+              const startDate = `${dateFormat.getDate()}/${
+                dateFormat.getMonth() + 1
+              }/${dateFormat.getFullYear()}`;
+              return (
+                <tr
+                  key={openday.id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {openday.title}
+                  </th>
+                  <td className="px-6 py-4">{startDate}</td>
+                  <td className="px-6 py-4">{openday.location}</td>
+                  <td className="px-6 py-4">{openday.status}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
