@@ -6,6 +6,7 @@ import Plans from './Components/Plans';
 import Admin from './Components/Admin';
 import Signup from './Components/Signup';
 import Header from './Components/Header';
+import AddOpenday from './Components/AddOpenday';
 import { UserProvider } from './Firebase/UserProvider';
 
 function App() {
@@ -30,7 +31,9 @@ function App() {
                   <Route exact path="/plans" element={<Plans />} />
                 </Route>
                 <Route exact path="/admin" element={<LoggedInRoute props="admin" />}>
-                  <Route exact path="/admin" element={<Admin />} />
+                  <Route exact path="/admin" element={<Admin />}>
+                    <Route exact path="addopenday" element={<AddOpenday />} />
+                  </Route>
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
