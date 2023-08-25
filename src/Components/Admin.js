@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { db } from '../Firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -47,7 +48,7 @@ function Admin() {
     <>
       <h1 className="text-2xl mb-8">Admin page</h1>
 
-      <div className="relative overflow-x-auto">
+      <div className="relative overflow-x-auto mb-3">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -75,10 +76,12 @@ function Admin() {
               return (
                 <tr
                   key={openday.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
                     {openday.title}
                   </th>
                   <td className="px-6 py-4">{startDate}</td>
@@ -90,6 +93,9 @@ function Admin() {
           </tbody>
         </table>
       </div>
+      <Link to="/admin/addopenday" className="btn bg-gray-600 mt-5">
+        Add an Openday
+      </Link>
     </>
   );
 }
