@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import flatpickr from 'flatpickr';
 
 function AddOpenday() {
   const { register, handleSubmit } = useForm();
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    flatpickr('#starttime', {
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i',
+      minTime: '09:00',
+      maxTime: '16:00'
+    });
+
+    flatpickr('#endtime', {
+      enableTime: true,
+      dateFormat: 'Y-m-d H:i',
+      minTime: '09:00',
+      maxTime: '16:00'
+    });
+  }, []);
 
   const onSubmit = async (data) => {
     console.log(isLoading);
@@ -55,36 +72,35 @@ function AddOpenday() {
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="email1" className="inputLabel">
-                    Your email
+                  <label htmlFor="starttime" className="inputLabel">
+                    Start time
                   </label>
                 </div>
                 <div className="inputWrapper">
                   <input
-                    type="email"
-                    name="email1"
-                    id="email1"
+                    type="text"
+                    name="starttime"
+                    id="starttime"
                     required
                     className="textInput"
-                    placeholder="john@doe.com"
-                    {...register('email')}
+                    {...register('starttime')}
                   />
                 </div>
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="password1" className="inputLabel">
-                    Your password
+                  <label htmlFor="endtime" className="inputLabel">
+                    End time
                   </label>
                 </div>
                 <div className="inputWrapper">
                   <input
-                    type="password"
-                    name="password1"
-                    id="password1"
+                    type="text"
+                    name="endtime"
+                    id="endtime"
                     required
                     className="textInput"
-                    {...register('password')}
+                    {...register('endtime')}
                   />
                 </div>
               </div>

@@ -9,6 +9,8 @@ import Header from './Components/Header';
 import AddOpenday from './Components/AddOpenday';
 import { UserProvider } from './Firebase/UserProvider';
 
+import 'flatpickr/dist/flatpickr.min.css';
+
 function App() {
   return (
     <UserProvider>
