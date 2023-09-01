@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { db } from '../Firebase/config';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { parse } from 'date-fns';
 import flatpickr from 'flatpickr';
 
 function AddOpenday() {
@@ -25,8 +28,13 @@ function AddOpenday() {
 
   const onSubmit = async (data) => {
     console.log(isLoading);
-    console.log(data);
     setLoading(false);
+
+    data.starttime = Timestamp.fromDate(parse(data.starttime, 'yyyy-MM-dd HH:mm', new Date()));
+    data.endtime = Timestamp.fromDate(parse(data.endtime, 'yyyy-MM-dd HH:mm', new Date()));
+
+    const docRef = await addDoc(collection(db, 'openday'), data);
+    console.log('Document written with ID: ', docRef.id);
   };
 
   return (
