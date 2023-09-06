@@ -39,8 +39,10 @@ function App() {
                 <Route path="/admin/addopenday" element={<LoggedInRoute props="addopenday" />}>
                   <Route path="/admin/addopenday" element={<AddOpenday />} />
                 </Route>
-                <Route path="/admin/editopenday" element={<LoggedInRoute props="editopenday" />}>
-                  <Route path="/admin/editopenday" element={<EditOpenday />} />
+                <Route
+                  path="/admin/editopenday/:id"
+                  element={<LoggedInRoute props="editopenday" />}>
+                  <Route path="/admin/editopenday/:id" element={<EditOpenday />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
