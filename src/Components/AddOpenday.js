@@ -116,6 +116,24 @@ function AddOpenday() {
                   />
                 </div>
               </div>
+              <div>
+                <div className="mb-2 block">
+                  <label htmlFor="status" className="inputLabel">
+                    Status
+                  </label>
+                </div>
+                <div className="inputWrapper">
+                  <select
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="status"
+                    id="status"
+                    required
+                    {...register('status')}>
+                    <option value="Live">Live</option>
+                    <option value="Disabled">Disabled</option>
+                  </select>
+                </div>
+              </div>
               <div className="mt-6 flex items-center justify-end gap-x-6">
                 <Link to="/admin" className="btn bg-red-600 hover:bg-red-700 focus:ring-red-500">
                   Cancel
