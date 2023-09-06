@@ -128,7 +128,8 @@ function AddOpenday() {
                     name="status"
                     id="status"
                     required
-                    {...register('status')}>
+                    {...register('status')}
+                  >
                     <option value="Live">Live</option>
                     <option value="Disabled">Disabled</option>
                   </select>
@@ -140,7 +141,8 @@ function AddOpenday() {
                 </Link>
                 <button
                   type="submit"
-                  className="btn bg-green-600 hover:bg-green-700 focus:ring-green-500">
+                  className="btn bg-green-600 hover:bg-green-700 focus:ring-green-500"
+                >
                   Save
                 </button>
               </div>
