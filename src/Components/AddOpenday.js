@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../Firebase/config';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { parse } from 'date-fns';
 import flatpickr from 'flatpickr';
 
 function AddOpenday() {
   const { register, handleSubmit } = useForm();
   const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     flatpickr('#starttime', {
@@ -33,8 +34,11 @@ function AddOpenday() {
     data.starttime = Timestamp.fromDate(parse(data.starttime, 'yyyy-MM-dd HH:mm', new Date()));
     data.endtime = Timestamp.fromDate(parse(data.endtime, 'yyyy-MM-dd HH:mm', new Date()));
 
+    console.log(data);
+
     const docRef = await addDoc(collection(db, 'openday'), data);
     console.log('Document written with ID: ', docRef.id);
+    navigate('/admin');
   };
 
   return (
