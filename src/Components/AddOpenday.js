@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { db } from '../Firebase/config';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,6 @@ import flatpickr from 'flatpickr';
 
 function AddOpenday() {
   const { register, handleSubmit } = useForm();
-  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,9 +27,6 @@ function AddOpenday() {
   }, []);
 
   const onSubmit = async (data) => {
-    console.log(isLoading);
-    setLoading(false);
-
     data.starttime = Timestamp.fromDate(parse(data.starttime, 'yyyy-MM-dd HH:mm', new Date()));
     data.endtime = Timestamp.fromDate(parse(data.endtime, 'yyyy-MM-dd HH:mm', new Date()));
 
@@ -128,8 +124,7 @@ function AddOpenday() {
                     name="status"
                     id="status"
                     required
-                    {...register('status')}
-                  >
+                    {...register('status')}>
                     <option value="Live">Live</option>
                     <option value="Disabled">Disabled</option>
                   </select>
@@ -141,8 +136,7 @@ function AddOpenday() {
                 </Link>
                 <button
                   type="submit"
-                  className="btn bg-green-600 hover:bg-green-700 focus:ring-green-500"
-                >
+                  className="btn bg-green-600 hover:bg-green-700 focus:ring-green-500">
                   Save
                 </button>
               </div>
