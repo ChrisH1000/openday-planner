@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { db } from '../Firebase/config';
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import Loader from './Loader';
+import { format } from 'date-fns';
 
 function Admin() {
   const [opendays, setOpendays] = useState([]);
@@ -13,29 +14,7 @@ function Admin() {
       const querySnapshot = await getDocs(collection(db, 'openday'));
 
       const odays = querySnapshot.docs.map(async (doc) => {
-        const opendayData = { id: doc.id, ...doc.data() };
-
-        const eventsQuerySnapshot = await getDocs(collection(db, 'openday', doc.id, 'events'));
-        const events = await Promise.all(
-          eventsQuerySnapshot.docs.map(async (eventDoc) => {
-            const eventData = { id: eventDoc.id, ...eventDoc.data() };
-
-            const sessionsQuerySnapshot = await getDocs(
-              collection(db, 'openday', doc.id, 'events', eventDoc.id, 'sessions')
-            );
-            const sessions = sessionsQuerySnapshot.docs.map((sessionDoc) => {
-              return { id: sessionDoc.id, ...sessionDoc.data() };
-            });
-
-            eventData.sessions = sessions;
-
-            return eventData;
-          })
-        );
-
-        opendayData.events = events;
-
-        return opendayData;
+        return { id: doc.id, ...doc.data() };
       });
 
       return Promise.all(odays);
@@ -81,10 +60,7 @@ function Admin() {
             <tbody>
               {console.log(opendays)}
               {opendays.map((openday) => {
-                const dateFormat = new Date(openday.starttime.seconds * 1000);
-                const startDate = `${dateFormat.getDate()}/${
-                  dateFormat.getMonth() + 1
-                }/${dateFormat.getFullYear()}`;
+                const startDate = format(openday.starttime.toDate(), 'yyyy-MM-dd');
                 return (
                   <tr
                     key={openday.id}
@@ -92,12 +68,17 @@ function Admin() {
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      <Link to={'/admin/editopenday/' + openday.id}>{openday.title}</Link>
+                      <Link to={'/admin/events/' + openday.id}>{openday.title}</Link>
                     </th>
                     <td className="px-6 py-4">{startDate}</td>
                     <td className="px-6 py-4">{openday.location}</td>
                     <td className="px-6 py-4">{openday.status}</td>
                     <td className="px-2 py-4">
+                      <Link
+                        to={'/admin/editopenday/' + openday.id}
+                        className="btn bg-orange-600 mr-5">
+                        Edit
+                      </Link>
                       <button
                         type="button"
                         className="btn bg-red-800"
