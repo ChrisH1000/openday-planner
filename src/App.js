@@ -6,6 +6,7 @@ import Plans from './Components/Plans';
 import Admin from './Components/Admin';
 import Signup from './Components/Signup';
 import Header from './Components/Header';
+import Events from './Components/Events';
 import AddOpenday from './Components/AddOpenday';
 import EditOpenday from './Components/EditOpenday';
 import { UserProvider } from './Firebase/UserProvider';
@@ -35,6 +36,9 @@ function App() {
                 </Route>
                 <Route path="/admin" element={<LoggedInRoute props="admin" />}>
                   <Route path="/admin" element={<Admin />} />
+                </Route>
+                <Route path="/admin/events/:id" element={<LoggedInRoute props="events" />}>
+                  <Route path="/admin/events/:id" element={<Events />} />
                 </Route>
                 <Route path="/admin/addopenday" element={<LoggedInRoute props="addopenday" />}>
                   <Route path="/admin/addopenday" element={<AddOpenday />} />
