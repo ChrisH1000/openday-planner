@@ -55,8 +55,6 @@ function Events() {
     // await deleteDoc(doc(db, 'event', id));
     const filteredEvents = openday.events.filter((event) => event.id !== id);
     setOpenday({ ...openday, events: filteredEvents });
-    // setOpenday(openday.events.filter((event) => event.id !== id));
-    console.log(openday);
   };
 
   if (isLoading) {
@@ -85,6 +83,9 @@ function Events() {
                 <th scope="col" className="px-6 py-3">
                   Maplabel
                 </th>
+                <th scope="col" className="px-6 py-3">
+                  Sessions
+                </th>
                 <th scope="col" className="px-2 py-3"></th>
               </tr>
             </thead>
@@ -103,6 +104,17 @@ function Events() {
                     <td className="px-6 py-4">{event.description}</td>
                     <td className="px-6 py-4">{event.maplink}</td>
                     <td className="px-6 py-4">{event.maplabel}</td>
+                    <td className="px-6 py-4">
+                      {event.sessions.map((session) => {
+                        const startTime = format(session.starttime.toDate(), 'hh:mm a');
+                        const endTime = format(session.endtime.toDate(), 'hh:mm a');
+                        return (
+                          <p key={session.id}>
+                            {startTime} - {endTime}
+                          </p>
+                        );
+                      })}
+                    </td>
                     <td className="px-2 py-4">
                       <Link to={'/admin/editevent/' + event.id} className="btn bg-orange-600 mr-5">
                         Edit
