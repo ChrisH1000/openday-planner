@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { db } from '../Firebase/config';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { parse } from 'date-fns';
 import flatpickr from 'flatpickr';
 
 function AddEvent() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const propsData = location.state;
-  console.log(propsData);
+  const opendayID = location.state;
+  console.log(opendayID);
 
   useEffect(() => {
     flatpickr('#starttime', {
@@ -30,14 +29,12 @@ function AddEvent() {
   }, []);
 
   const onSubmit = async (data) => {
-    data.starttime = Timestamp.fromDate(parse(data.starttime, 'yyyy-MM-dd HH:mm', new Date()));
-    data.endtime = Timestamp.fromDate(parse(data.endtime, 'yyyy-MM-dd HH:mm', new Date()));
-
+    data.openday = opendayID;
     console.log(data);
 
-    const docRef = await addDoc(collection(db, 'Event'), data);
+    const docRef = await addDoc(collection(db, 'event'), data);
     console.log('Document written with ID: ', docRef.id);
-    navigate('/admin');
+    navigate('/admin/events/' + opendayID);
   };
 
   return (
@@ -66,75 +63,60 @@ function AddEvent() {
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="location" className="inputLabel">
-                    Location
+                  <label htmlFor="description" className="inputLabel">
+                    Description
                   </label>
                 </div>
                 <div className="inputWrapper">
                   <input
                     type="text"
-                    name="location"
-                    id="location"
+                    name="description"
+                    id="description"
                     required
                     className="textInput"
-                    {...register('location')}
+                    {...register('description')}
                   />
                 </div>
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="starttime" className="inputLabel">
-                    Start time
+                  <label htmlFor="maplink" className="inputLabel">
+                    Maplink
                   </label>
                 </div>
                 <div className="inputWrapper">
                   <input
                     type="text"
-                    name="starttime"
-                    id="starttime"
+                    name="maplink"
+                    id="maplink"
                     required
                     className="textInput"
-                    {...register('starttime')}
+                    {...register('maplink')}
                   />
                 </div>
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="endtime" className="inputLabel">
-                    End time
+                  <label htmlFor="maplabel" className="inputLabel">
+                    Maplabel
                   </label>
                 </div>
                 <div className="inputWrapper">
                   <input
                     type="text"
-                    name="endtime"
-                    id="endtime"
+                    name="maplabel"
+                    id="maplabel"
                     required
                     className="textInput"
-                    {...register('endtime')}
+                    {...register('maplabel')}
                   />
                 </div>
               </div>
-              <div>
-                <div className="mb-2 block">
-                  <label htmlFor="status" className="inputLabel">
-                    Status
-                  </label>
-                </div>
-                <div className="inputWrapper">
-                  <select
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    name="status"
-                    id="status"
-                    required
-                    {...register('status')}>
-                    <option value="Live">Live</option>
-                    <option value="Disabled">Disabled</option>
-                  </select>
-                </div>
-              </div>
+
               <div className="mt-6 flex items-center justify-end gap-x-6">
-                <Link to="/admin/" className="btn bg-red-600 hover:bg-red-700 focus:ring-red-500">
+                <Link
+                  to={'/admin/events/' + opendayID}
+                  className="btn bg-red-600 hover:bg-red-700 focus:ring-red-500">
                   Cancel
                 </Link>
                 <button
