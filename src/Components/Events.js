@@ -23,15 +23,15 @@ function Events() {
           eventsQuerySnapshot.docs.map(async (eventDoc) => {
             const eventData = { id: eventDoc.id, ...eventDoc.data() };
 
-            /* const sessionsQuerySnapshot = await getDocs(
-              collection(db, 'openday', doc.id, 'events', eventDoc.id, 'sessions')
+            const q = query(collection(db, 'session'), where('event', '==', eventDoc.id));
+            const sessionsQuerySnapshot = await getDocs(q);
+            const sessions = await Promise.all(
+              sessionsQuerySnapshot.docs.map(async (sessionDoc) => {
+                return { id: sessionDoc.id, ...sessionDoc.data() };
+              })
             );
-            const sessions = sessionsQuerySnapshot.docs.map((sessionDoc) => {
-              return { id: sessionDoc.id, ...sessionDoc.data() };
-            });
 
-            eventData.sessions = sessions; */
-
+            eventData.sessions = sessions;
             return eventData;
           })
         );
