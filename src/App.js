@@ -9,6 +9,7 @@ import Header from './Components/Header';
 import Events from './Components/Events';
 import AddOpenday from './Components/AddOpenday';
 import EditOpenday from './Components/EditOpenday';
+import AddEvent from './Components/AddEvent';
 import { UserProvider } from './Firebase/UserProvider';
 
 import 'flatpickr/dist/flatpickr.min.css';
@@ -47,6 +48,9 @@ function App() {
                   path="/admin/editopenday/:id"
                   element={<LoggedInRoute props="editopenday" />}>
                   <Route path="/admin/editopenday/:id" element={<EditOpenday />} />
+                </Route>
+                <Route path="/admin/addevent" element={<LoggedInRoute props="addevent" />}>
+                  <Route path="/admin/addevent" element={<AddEvent />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>

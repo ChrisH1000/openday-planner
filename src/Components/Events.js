@@ -132,7 +132,7 @@ function Events() {
             </tbody>
           </table>
         </div>
-        <Link to="/admin/addevent" className="btn bg-gray-600 mt-5">
+        <Link to="/admin/addevent" state={id} className="btn bg-gray-600 mt-5">
           Add an Event
         </Link>
       </>
