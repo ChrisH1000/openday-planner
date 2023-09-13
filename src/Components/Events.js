@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { db } from '../Firebase/config';
-import { collection, getDocs, getDoc, doc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, where, query } from 'firebase/firestore';
 import { format } from 'date-fns';
 import Loader from './Loader';
 
@@ -12,39 +12,13 @@ function Events() {
 
   useEffect(() => {
     async function fetchData() {
-      /* const querySnapshot = await getDocs(collection(db, 'openday'));
-
-      const odays = querySnapshot.docs.map(async (doc) => {
-        const opendayData = { id: doc.id, ...doc.data() };
-
-        const eventsQuerySnapshot = await getDocs(collection(db, 'openday', doc.id, 'events'));
-        const events = await Promise.all(
-          eventsQuerySnapshot.docs.map(async (eventDoc) => {
-            const eventData = { id: eventDoc.id, ...eventDoc.data() };
-
-            const sessionsQuerySnapshot = await getDocs(
-              collection(db, 'openday', doc.id, 'events', eventDoc.id, 'sessions')
-            );
-            const sessions = sessionsQuerySnapshot.docs.map((sessionDoc) => {
-              return { id: sessionDoc.id, ...sessionDoc.data() };
-            });
-
-            eventData.sessions = sessions;
-
-            return eventData;
-          })
-        );
-
-        opendayData.events = events;
-
-        return opendayData;
-      }); */
       const docRef = doc(db, 'openday', id);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         const opendayData = docSnap.data();
-        const eventsQuerySnapshot = await getDocs(collection(db, 'openday', id, 'event'));
+        const q = query(collection(db, 'event'), where('openday', '==', id));
+        const eventsQuerySnapshot = await getDocs(q);
         const events = await Promise.all(
           eventsQuerySnapshot.docs.map(async (eventDoc) => {
             const eventData = { id: eventDoc.id, ...eventDoc.data() };
@@ -77,8 +51,12 @@ function Events() {
   }, []);
 
   const deleteEvent = async (id) => {
-    await deleteDoc(doc(db, 'event', id));
-    // setEvent(openday.events.filter((event) => event.id !== id));
+    console.log(id);
+    // await deleteDoc(doc(db, 'event', id));
+    const filteredEvents = openday.events.filter((event) => event.id !== id);
+    setOpenday({ ...openday, events: filteredEvents });
+    // setOpenday(openday.events.filter((event) => event.id !== id));
+    console.log(openday);
   };
 
   if (isLoading) {
