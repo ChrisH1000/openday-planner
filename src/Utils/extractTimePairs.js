@@ -14,8 +14,11 @@ function extractTimePairs(obj) {
           timePairs[number - 1] = {};
         }
 
-        // Set the value in the corresponding object
-        timePairs[number - 1][key] = obj[key];
+        // Determine the property name (starttime or endtime)
+        const propertyName = key.startsWith('starttime') ? 'starttime' : 'endtime';
+
+        // Set the value in the corresponding object with standard keys
+        timePairs[number - 1][propertyName] = obj[key];
 
         // Remove the property from the original object
         delete obj[key];
