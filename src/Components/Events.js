@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { db } from '../Firebase/config';
-import { collection, getDocs, getDoc, doc, where, query } from 'firebase/firestore';
+import { collection, getDocs, getDoc, deleteDoc, doc, where, query } from 'firebase/firestore';
 import { format } from 'date-fns';
 import Loader from './Loader';
 
@@ -52,7 +52,7 @@ function Events() {
 
   const deleteEvent = async (id) => {
     console.log(id);
-    // await deleteDoc(doc(db, 'event', id));
+    await deleteDoc(doc(db, 'event', id));
     const filteredEvents = openday.events.filter((event) => event.id !== id);
     setOpenday({ ...openday, events: filteredEvents });
   };
