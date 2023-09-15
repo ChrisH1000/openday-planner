@@ -1,32 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from '../Firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import flatpickr from 'flatpickr';
+// import { set } from 'date-fns';
 
 function AddEvent() {
   const { register, handleSubmit } = useForm();
+  const [sessionCount, setSessionCount] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
   const opendayID = location.state;
   console.log(opendayID);
 
   useEffect(() => {
-    flatpickr('#starttime', {
+    console.log(sessionCount);
+    flatpickr('#starttime' + sessionCount, {
+      noCalendar: true,
       enableTime: true,
-      dateFormat: 'Y-m-d H:i',
+      dateFormat: 'h:i K',
       minTime: '09:00',
       maxTime: '16:00'
     });
 
-    flatpickr('#endtime', {
+    flatpickr('#endtime' + sessionCount, {
+      noCalendar: true,
       enableTime: true,
-      dateFormat: 'Y-m-d H:i',
+      dateFormat: 'h:i K',
       minTime: '09:00',
       maxTime: '16:00'
     });
-  }, []);
+  }, [sessionCount]);
 
   const onSubmit = async (data) => {
     data.openday = opendayID;
@@ -112,6 +117,52 @@ function AddEvent() {
                   />
                 </div>
               </div>
+              <h3 className="text-lg font-bold">Sessions</h3>
+              <div className="grid grid-cols-2 gap-4">
+                {[...Array(sessionCount)].map((e, i) => {
+                  i++;
+                  return (
+                    <div key={i}>
+                      <div className="mb-2">
+                        <label htmlFor={'starttime' + i} className="inputLabel">
+                          Start time {i}
+                        </label>
+                      </div>
+                      <div className="inputWrapper">
+                        <input
+                          type="text"
+                          name={'starttime' + i}
+                          id={'starttime' + i}
+                          required
+                          className="textInput"
+                          {...register('starttime' + i)}
+                        />
+                      </div>
+                      <div className="mb-2">
+                        <label htmlFor={'endtime' + i} className="inputLabel">
+                          End time {i}
+                        </label>
+                      </div>
+                      <div className="inputWrapper">
+                        <input
+                          type="text"
+                          name={'endtime' + i}
+                          id={'endtime' + i}
+                          required
+                          className="textInput"
+                          {...register('endtime' + i)}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                className="btn bg-yellow-500"
+                onClick={() => setSessionCount(sessionCount + 1)}>
+                Add session
+              </button>
 
               <div className="mt-6 flex items-center justify-end gap-x-6">
                 <Link
