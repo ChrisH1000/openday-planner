@@ -128,16 +128,22 @@ function AddEvent() {
                 </div>
               </div>
               <h3 className="text-lg font-bold">Sessions</h3>
-              <div className="grid grid-cols-2 gap-4">
+              <div>
                 {[...Array(sessionCount)].map((e, i) => {
                   i++;
+
+                  const btn =
+                    i > 1 ? (
+                      <button
+                        type="button"
+                        className="btn bg-red-500"
+                        onClick={() => setSessionCount(sessionCount - 1)}>
+                        Remove session
+                      </button>
+                    ) : null;
+
                   return (
-                    <div key={i}>
-                      <div className="mb-2">
-                        <label htmlFor={'starttime' + i} className="inputLabel">
-                          Start time {i}
-                        </label>
-                      </div>
+                    <div key={i} className="grid grid-cols-3 gap-4 mb-4">
                       <div className="inputWrapper">
                         <input
                           type="text"
@@ -145,13 +151,9 @@ function AddEvent() {
                           id={'starttime' + i}
                           required
                           className="textInput"
+                          placeholder="start time"
                           {...register('starttime' + i)}
                         />
-                      </div>
-                      <div className="mb-2">
-                        <label htmlFor={'endtime' + i} className="inputLabel">
-                          End time {i}
-                        </label>
                       </div>
                       <div className="inputWrapper">
                         <input
@@ -160,9 +162,11 @@ function AddEvent() {
                           id={'endtime' + i}
                           required
                           className="textInput"
+                          placeholder="end time"
                           {...register('endtime' + i)}
                         />
                       </div>
+                      {btn}
                     </div>
                   );
                 })}
