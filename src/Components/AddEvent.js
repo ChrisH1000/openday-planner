@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../Firebase/config';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import flatpickr from 'flatpickr';
 import extractTimePairs from '../Utils/extractTimePairs';
-import { parse } from 'date-fns';
+// import { parse } from 'date-fns';
 
 function AddEvent() {
   const { register, handleSubmit } = useForm();
@@ -19,14 +19,16 @@ function AddEvent() {
     console.log(sessionCount);
     flatpickr('#starttime' + sessionCount, {
       enableTime: true,
-      dateFormat: 'Y-m-d H:i',
+      noCalendar: true,
+      dateFormat: 'H:i',
       minTime: '09:00',
       maxTime: '16:00'
     });
 
     flatpickr('#endtime' + sessionCount, {
       enableTime: true,
-      dateFormat: 'Y-m-d H:i',
+      noCalendar: true,
+      dateFormat: 'H:i',
       minTime: '09:00',
       maxTime: '16:00'
     });
@@ -34,8 +36,8 @@ function AddEvent() {
 
   const onSubmit = async (data) => {
     data.openday = opendayID;
-    const sessions = extractTimePairs(data);
     console.log(data);
+    const sessions = extractTimePairs(data);
     console.log(sessions);
 
     const docRef = await addDoc(collection(db, 'event'), data);
@@ -43,10 +45,10 @@ function AddEvent() {
 
     sessions.forEach(async (session) => {
       session.event = docRef.id;
-      session.starttime = Timestamp.fromDate(
+      /* session.starttime = Timestamp.fromDate(
         parse(session.starttime, 'yyyy-MM-dd HH:mm', new Date())
       );
-      session.endtime = Timestamp.fromDate(parse(session.endtime, 'yyyy-MM-dd HH:mm', new Date()));
+      session.endtime = Timestamp.fromDate(parse(session.endtime, 'yyyy-MM-dd HH:mm', new Date())); */
       await addDoc(collection(db, 'session'), session);
     });
     navigate('/admin/events/' + opendayID);

@@ -106,11 +106,11 @@ function Events() {
                     <td className="px-6 py-4">{event.maplabel}</td>
                     <td className="px-6 py-4">
                       {event.sessions.map((session) => {
-                        const startTime = format(session.starttime.toDate(), 'hh:mm a');
-                        const endTime = format(session.endtime.toDate(), 'hh:mm a');
+                        // const startTime = format(session.starttime.toDate(), 'hh:mm a');
+                        // const endTime = format(session.endtime.toDate(), 'hh:mm a');
                         return (
                           <p key={session.id}>
-                            {startTime} - {endTime}
+                            {session.starttime} - {session.endtime}
                           </p>
                         );
                       })}
